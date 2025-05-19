@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive survey tool with real-time answer validation. Create and take quizzes with instant feedback on correct answers.">
+    <meta name="keywords" content="survey, quiz, questionnaire, online test, assessment tool, interactive quiz">
+    <meta name="survey" content="SurveyTool">
+    <meta name="robots" content="index, follow">
+    <title>Interactive Survey Tool | Real-time Answer Validation</title>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yoursurveytool.com/">
+    <meta property="og:title" content="Interactive Survey Tool">
+    <meta property="og:description" content="Create and take quizzes with instant feedback on correct answers.">
+    <meta property="og:image" content="https://yoursurveytool.com/images/survey-tool-preview.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yoursurveytool.com/">
+    <meta property="twitter:title" content="Interactive Survey Tool">
+    <meta property="twitter:description" content="Create and take quizzes with instant feedback on correct answers.">
+    <meta property="twitter:image" content="https://yoursurveytool.com/images/survey-tool-preview.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yoursurveytool.com/">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Interactive Survey Tool",
+      "url": "https://yoursurveytool.com/",
+      "description": "Create and take quizzes with instant feedback on correct answers.",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web"
+    }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4285f4;
+            --secondary-color: #34a853;
+            --accent-color: #ea4335;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --medium-gray: #757575;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            background-color: #f9f9f9;
+            padding: 0;
+            margin: 0;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #3367d6;
+        }
+        
+        .ad-container {
+            background-color: var(--light-gray);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            border-radius: 4px;
+            border: 1px dashed #ccc;
+        }
+        
+        .survey-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .survey-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .survey-header h2 {
+            font-size: 1.8rem;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+        }
+        
+        .survey-header p {
+            color: var(--medium-gray);
+        }
+        
+        .question {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .option {
+            margin-bottom: 0.5rem;
+        }
+        
+        .option label {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .option label:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            margin-right: 0.8rem;
+        }
+        
+        .results {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .results h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+        
+        .score {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .feedback {
+            font-size: 1.1rem;
+            color: var(--medium-gray);
+        }
+        
+        footer {
+            background-color: var(--dark-gray);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            margin-top: 1.5rem;
+            color: #aaa;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .survey-container {
+                padding: 1.5rem;
+            }
+            
+            .question-text {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                padding: 2rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .survey-container {
+                padding: 1rem;
+            }
+            
+            .option label {
+                padding: 0.6rem;
+            }
+        }
+        
+        /* Correct/incorrect answer styling */
+        .correct {
+            background-color: rgba(52, 168, 83, 0.1);
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .incorrect {
+            background-color: rgba(234, 67, 53, 0.1);
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .correct-answer {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">SurveyTool</a>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Create Survey</a></li>
+                    <li><a href="#">Templates</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Interactive Survey Tool</h1>
+            <p>Create and take quizzes with instant feedback on correct answers. Perfect for educators, trainers, and businesses.</p>
+            <a href="#" class="btn btn-primary">Create Your Survey Now</a>
+        </div>
+    </section>
+    
+    <main class="container">
+        <!-- Top Ad Banner -->
+        <div class="ad-container">
+            <!-- Replace with your Google AdSense code -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+                crossorigin="anonymous"></script>
+            <!-- TopBannerAd -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+                data-ad-slot="YOUR_AD_SLOT_ID"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+        
+        <div class="survey-container">
+            <div class="survey-header">
+                <h2>Sample Knowledge Quiz</h2>
+                <p>Test your knowledge with this interactive quiz. You'll get immediate feedback on your answers.</p>
+            </div>
+            
+            <form id="survey-form">
+                <div class="question">
+                    <div class="question-text">1. What is the capital of France?</div>
+                    <div class="options">
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q1" value="a">
+                                London
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q1" value="b">
+                                Berlin
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q1" value="c" data-correct="true">
+                                Paris
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q1" value="d">
+                                Madrid
+                            </label>
+                        </div>
+                    </div>
+                    <div class="correct-answer">Correct answer: Paris</div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">2. Which of these are primary colors? (Select all that apply)</div>
+                    <div class="options">
+                        <div class="option">
+                            <label>
+                                <input type="checkbox" name="q2" value="a" data-correct="true">
+                                Red
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="checkbox" name="q2" value="b">
+                                Green
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="checkbox" name="q2" value="c" data-correct="true">
+                                Blue
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="checkbox" name="q2" value="d" data-correct="true">
+                                Yellow
+                            </label>
+                        </div>
+                    </div>
+                    <div class="correct-answer">Correct answers: Red, Blue, Yellow</div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">3. What is the largest planet in our solar system?</div>
+                    <div class="options">
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q3" value="a">
+                                Earth
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q3" value="b" data-correct="true">
+                                Jupiter
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q3" value="c">
+                                Saturn
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q3" value="d">
+                                Mars
+                            </label>
+                        </div>
+                    </div>
+                    <div class="correct-answer">Correct answer: Jupiter</div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">4. Which language is used primarily for web development?</div>
+                    <div class="options">
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q4" value="a">
+                                Java
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q4" value="b">
+                                C++
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q4" value="c" data-correct="true">
+                                JavaScript
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q4" value="d">
+                                Python
+                            </label>
+                        </div>
+                    </div>
+                    <div class="correct-answer">Correct answer: JavaScript</div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">5. The chemical symbol for gold is:</div>
+                    <div class="options">
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q5" value="a">
+                                Go
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q5" value="b" data-correct="true">
+                                Au
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q5" value="c">
+                                Gd
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q5" value="d">
+                                Ag
+                            </label>
+                        </div>
+                    </div>
+                    <div class="correct-answer">Correct answer: Au</div>
+                </div>
+                
+                <div class="ad-container">
+                    <!-- Middle Ad Banner -->
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+                        crossorigin="anonymous"></script>
+                    <!-- MiddleBannerAd -->
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+                        data-ad-slot="YOUR_AD_SLOT_ID"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">6. What year did World War II end?</div>
+                    <div class="options">
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q6" value="a">
+                                1943
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q6" value="b">
+                                1947
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q6" value="c" data-correct="true">
+                                1945
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="q6" value="d">
+                                1939
+                            </label>
+                        </div>
+                    </div>
+                    <div class="correct-answer">Correct answer: 1945</div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">7. Which of these are mammals? (Select all that apply)</div>
+                    <div class="options">
+                        <div class="option">
+                            <label>
+                                <input type="checkbox" name="q7" value="a" data-correct="true">
+                                Dolphin
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="checkbox" name="q7" value="b">
+                                Penguin
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="checkbox" name="q7" value="c" data-correct="true">
+                                Bat
+                            </label>
+                        </div>
+                        <div class="option">
+                            <label>
+                                <input type="checkbox" name="q7" value="d">
+                                Shark
+                            </label>
+                        </div>
+                    </div>
+                    <div class="correct-answer">Correct answers: Dolphin, Bat</div>
+                </div>
+                
+                <button type="button" id="submit-btn" class="btn btn-primary">Submit Answers</button>
+                
+                <div class="spinner" id="loading-spinner"></div>
+                
+                <div class="results" id="results">
+                    <h3>Your Results</h3>
+                    <div class="score" id="score">0/7</div>
+                    <div class="feedback" id="feedback"></div>
+                    <button type="button" id="retry-btn" class="btn">Try Again</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Bottom Ad Banner -->
+        <div class="ad-container">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+                crossorigin="anonymous"></script>
+            <!-- BottomBannerAd -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+                data-ad-slot="YOUR_AD_SLOT_ID"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About SurveyTool</h3>
+                    <p>Creating interactive surveys and quizzes since 2023. Our mission is to make assessment tools accessible to everyone.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Survey Templates</a></li>
+                        <li><a href="#">API Documentation</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 SurveyTool. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const surveyForm = document.getElementById('survey-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const retryBtn = document.getElementById('retry-btn');
+            const resultsDiv = document.getElementById('results');
+            const scoreSpan = document.getElementById('score');
+            const feedbackDiv = document.getElementById('feedback');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            
+            // Submit button click handler
+            submitBtn.addEventListener('click', function() {
+                // Show loading spinner
+                submitBtn.style.display = 'none';
+                loadingSpinner.style.display = 'block';
+                
+                // Simulate processing delay
+                setTimeout(function() {
+                    calculateResults();
+                    loadingSpinner.style.display = 'none';
+                    resultsDiv.style.display = 'block';
+                }, 1000);
+            });
+            
+            // Retry button click handler
+            retryBtn.addEventListener('click', function() {
+                // Reset form
+                surveyForm.reset();
+                
+                // Remove all styling from options
+                const allLabels = document.querySelectorAll('.option label');
+                allLabels.forEach(label => {
+                    label.classList.remove('correct', 'incorrect');
+                });
+                
+                // Hide correct answers
+                const correctAnswers = document.querySelectorAll('.correct-answer');
+                correctAnswers.forEach(answer => {
+                    answer.style.display = 'none';
+                });
+                
+                // Hide results and show submit button
+                resultsDiv.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            });
+            
+            // Calculate results
+            function calculateResults() {
+                let correctCount = 0;
+                const totalQuestions = document.querySelectorAll('.question').length;
+                
+                // Process each question
+                document.querySelectorAll('.question').forEach(question => {
+                    const options = question.querySelectorAll('.options input');
+                    const correctAnswerDiv = question.querySelector('.correct-answer');
+                    
+                    // Check if question is multiple choice (checkbox) or single choice (radio)
+                    const isMultipleChoice = question.querySelector('input[type="checkbox"]') !== null;
+                    
+                    if (isMultipleChoice) {
+                        // Process multiple choice question
+                        let allCorrect = true;
+                        let anySelected = false;
+                        
+                        options.forEach(option => {
+                            const isCorrect = option.hasAttribute('data-correct');
+                            const isChecked = option.checked;
+                            
+                            if (isChecked) anySelected = true;
+                            
+                            // If selected correct or not selected incorrect - correct
+                            if ((isChecked && isCorrect) || (!isChecked && !isCorrect)) {
+                                // This part is correct
+                            } else {
+                                allCorrect = false;
+                            }
+                            
+                            // Highlight selected options
+                            if (isChecked) {
+                                const label = option.closest('label');
+                                if (isCorrect) {
+                                    label.classList.add('correct');
+                                } else {
+                                    label.classList.add('incorrect');
+                                }
+                            }
+                        });
+                        
+                        // Show correct answers if not all correct
+                        if (!allCorrect || !anySelected) {
+                            correctAnswerDiv.style.display = 'block';
+                        }
+                        
+                        // Count as correct only if all correct answers selected and no incorrect
+                        if (allCorrect && anySelected) {
+                            correctCount++;
+                        }
+                    } else {
+                        // Process single choice question
+                        let selectedOption = null;
+                        let isCorrect = false;
+                        
+                        options.forEach(option => {
+                            if (option.checked) {
+                                selectedOption = option;
+                                isCorrect = option.hasAttribute('data-correct');
+                            }
+                        });
+                        
+                        // Highlight selected option
+                        if (selectedOption) {
+                            const label = selectedOption.closest('label');
+                            if (isCorrect) {
+                                label.classList.add('correct');
+                                correctCount++;
+                            } else {
+                                label.classList.add('incorrect');
+                                correctAnswerDiv.style.display = 'block';
+                            }
+                        } else {
+                            // No option selected, show correct answer
+                            correctAnswerDiv.style.display = 'block';
+                        }
+                    }
+                });
+                
+                // Display results
+                scoreSpan.textContent = `${correctCount}/${totalQuestions}`;
+                
+                // Generate feedback based on score
+                const percentage = (correctCount / totalQuestions) * 100;
+                let feedback = '';
+                
+                if (percentage >= 90) {
+                    feedback = 'Excellent! You have a great knowledge of these topics.';
+                } else if (percentage >= 70) {
+                    feedback = 'Good job! You know quite a bit about these subjects.';
+                } else if (percentage >= 50) {
+                    feedback = 'Not bad! With a little more study you could improve.';
+                } else {
+                    feedback = 'Keep practicing! Review the correct answers and try again.';
+                }
+                
+                feedbackDiv.textContent = feedback;
+                
+                // Scroll to results
+                resultsDiv.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            // For demo purposes - simulate form submission
+            surveyForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitBtn.click();
+            });
+        });
+    </script>
+    
+    <!-- Google Analytics (optional) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOUR_GA_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-YOUR_GA_ID');
+    </script>
+</body>
+</html>
